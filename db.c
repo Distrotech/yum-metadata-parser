@@ -379,7 +379,8 @@ yum_db_create_primary_tables (sqlite3 *db, GError **err)
         "  release TEXT,"
         "  pkgKey INTEGER %s)";
 
-    const char *deps[] = { "requires", "provides", "conflicts", "obsoletes", NULL };
+    const char *deps[] = { "requires", "provides", "conflicts", "obsoletes",
+			   "suggests", "enhances", "recommends", "supplements", NULL };
     int i;
 
     for (i = 0; deps[i]; i++) {
@@ -411,6 +412,10 @@ yum_db_create_primary_tables (sqlite3 *db, GError **err)
         "    DELETE FROM provides WHERE pkgKey = old.pkgKey;"
         "    DELETE FROM conflicts WHERE pkgKey = old.pkgKey;"
         "    DELETE FROM obsoletes WHERE pkgKey = old.pkgKey;"
+        "    DELETE FROM suggests WHERE pkgKey = old.pkgKey;"
+        "    DELETE FROM enhances WHERE pkgKey = old.pkgKey;"
+        "    DELETE FROM recommends WHERE pkgKey = old.pkgKey;"
+        "    DELETE FROM supplements WHERE pkgKey = old.pkgKey;"
         "  END;";
 
     rc = sqlite3_exec (db, sql, NULL, NULL, NULL);

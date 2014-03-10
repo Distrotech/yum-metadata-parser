@@ -155,6 +155,10 @@ typedef struct {
     sqlite3_stmt *provides_handle;
     sqlite3_stmt *conflicts_handle;
     sqlite3_stmt *obsoletes_handle;
+    sqlite3_stmt *suggests_handle;
+    sqlite3_stmt *enhances_handle;
+    sqlite3_stmt *recommends_handle;
+    sqlite3_stmt *supplements_handle;
     sqlite3_stmt *files_handle;
 } PackageWriterInfo;
 
@@ -176,6 +180,18 @@ package_writer_info_init (UpdateInfo *update_info, sqlite3 *db, GError **err)
     if (*err)
         return;
     info->obsoletes_handle = yum_db_dependency_prepare (db, "obsoletes", err);
+    if (*err)
+        return;
+    info->suggests_handle = yum_db_dependency_prepare (db, "suggests", err);
+    if (*err)
+        return;
+    info->enhances_handle = yum_db_dependency_prepare (db, "enhances", err);
+    if (*err)
+        return;
+    info->recommends_handle = yum_db_dependency_prepare (db, "recommends", err);
+    if (*err)
+        return;
+    info->supplements_handle = yum_db_dependency_prepare (db, "supplements", err);
     if (*err)
         return;
     info->files_handle = yum_db_file_prepare (db, err);
@@ -229,6 +245,14 @@ write_package_to_db (UpdateInfo *update_info, Package *package)
                 package->pkgKey, package->conflicts);
     write_deps (update_info->db, info->obsoletes_handle,
                 package->pkgKey, package->obsoletes);
+    write_deps (update_info->db, info->suggests_handle,
+                package->pkgKey, package->suggests);
+    write_deps (update_info->db, info->enhances_handle,
+                package->pkgKey, package->enhances);
+    write_deps (update_info->db, info->recommends_handle,
+                package->pkgKey, package->recommends);
+    write_deps (update_info->db, info->supplements_handle,
+                package->pkgKey, package->supplements);
 
     write_files (update_info->db, info->files_handle, package);
 }
@@ -248,6 +272,14 @@ package_writer_info_clean (UpdateInfo *update_info)
         sqlite3_finalize (info->conflicts_handle);
     if (info->obsoletes_handle)
         sqlite3_finalize (info->obsoletes_handle);
+    if (info->suggests_handle)
+        sqlite3_finalize (info->suggests_handle);
+    if (info->enhances_handle)
+        sqlite3_finalize (info->enhances_handle);
+    if (info->recommends_handle)
+        sqlite3_finalize (info->recommends_handle);
+    if (info->supplements_handle)
+        sqlite3_finalize (info->supplements_handle);
     if (info->files_handle)
         sqlite3_finalize (info->files_handle);
 }

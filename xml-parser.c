@@ -244,6 +244,18 @@ primary_parser_format_start (PrimarySAXContext *ctx,
     } else if (!strcmp (name, "rpm:conflicts")) {
         ctx->state = PRIMARY_PARSER_DEP;
         ctx->current_dep_list = &sctx->current_package->conflicts;
+    } else if (!strcmp (name, "rpm:suggests")) {
+        ctx->state = PRIMARY_PARSER_DEP;
+        ctx->current_dep_list = &sctx->current_package->suggests;
+    } else if (!strcmp (name, "rpm:enhances")) {
+        ctx->state = PRIMARY_PARSER_DEP;
+        ctx->current_dep_list = &sctx->current_package->enhances;
+    } else if (!strcmp (name, "rpm:recommends")) {
+        ctx->state = PRIMARY_PARSER_DEP;
+        ctx->current_dep_list = &sctx->current_package->recommends;
+    } else if (!strcmp (name, "rpm:supplements")) {
+        ctx->state = PRIMARY_PARSER_DEP;
+        ctx->current_dep_list = &sctx->current_package->supplements;
     }
 
     else if (!strcmp (name, "file")) {

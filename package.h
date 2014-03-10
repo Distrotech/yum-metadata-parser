@@ -72,6 +72,10 @@ typedef struct {
     GSList *provides;
     GSList *conflicts;
     GSList *obsoletes;
+    GSList *suggests;
+    GSList *enhances;
+    GSList *recommends;
+    GSList *supplements;
 
     GSList *files;
     GSList *changelogs;

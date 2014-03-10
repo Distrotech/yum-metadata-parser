@@ -85,6 +85,26 @@ package_free (Package *package)
         g_slist_free (package->obsoletes);
     }
 
+    if (package->suggests) {
+        g_slist_foreach (package->suggests, (GFunc) g_free, NULL);
+        g_slist_free (package->suggests);
+    }
+
+    if (package->enhances) {
+        g_slist_foreach (package->enhances, (GFunc) g_free, NULL);
+        g_slist_free (package->enhances);
+    }
+
+    if (package->recommends) {
+        g_slist_foreach (package->recommends, (GFunc) g_free, NULL);
+        g_slist_free (package->recommends);
+    }
+
+    if (package->supplements) {
+        g_slist_foreach (package->supplements, (GFunc) g_free, NULL);
+        g_slist_free (package->supplements);
+    }
+
     if (package->files) {
         g_slist_foreach (package->files, (GFunc) g_free, NULL);
         g_slist_free (package->files);
