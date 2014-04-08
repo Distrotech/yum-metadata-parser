@@ -469,7 +469,8 @@ yum_db_index_primary_tables (sqlite3 *db, GError **err)
         return;
     }
 
-    const char *deps[] = { "requires", "provides", "conflicts", "obsoletes", NULL };
+    const char *deps[] = { "requires", "provides", "conflicts", "obsoletes",
+			   "suggests", "enhances", "recommends", "supplements", NULL };
     int i;
 
     const char *pkgindexsql = "CREATE INDEX IF NOT EXISTS pkg%s on %s (pkgKey)";
