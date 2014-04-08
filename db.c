@@ -493,6 +493,7 @@ yum_db_index_primary_tables (sqlite3 *db, GError **err)
         if (i < 2) {
             query = g_strdup_printf(nameindexsql, deps[i], deps[i]);
             rc = sqlite3_exec (db, query, NULL, NULL, NULL);
+            g_free(query);
             if (rc != SQLITE_OK) {
                 g_set_error (err, YUM_DB_ERROR, YUM_DB_ERROR,
                              "Can not create %sname index: %s",
