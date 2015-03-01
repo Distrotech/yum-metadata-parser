@@ -41,7 +41,7 @@ class RepodataParserSqlite:
         """Load primary.xml.gz from an sqlite cache and update it 
            if required"""
         return self.open_database(_sqlitecache.update_primary(location,
-															  checksum,
+                                                              checksum,
                                                               self.callback,
                                                               self.repoid))
 
@@ -49,14 +49,14 @@ class RepodataParserSqlite:
         """Load filelist.xml.gz from an sqlite cache and update it if 
            required"""
         return self.open_database(_sqlitecache.update_filelist(location,
-															   checksum,
+                                                               checksum,
                                                                self.callback,
                                                                self.repoid))
 
     def getOtherdata(self, location, checksum):
         """Load other.xml.gz from an sqlite cache and update it if required"""
         return self.open_database(_sqlitecache.update_other(location,
-															checksum,
+                                                            checksum,
                                                             self.callback,
                                                             self.repoid))
     
