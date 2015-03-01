@@ -592,7 +592,6 @@ yum_xml_parse_primary (const char *filename,
 {
     PrimarySAXContext ctx;
     SAXContext *sctx = &ctx.sctx;
-    int rc;
 
     ctx.state = PRIMARY_PARSER_TOPLEVEL;
     ctx.current_dep_list = NULL;
@@ -602,7 +601,7 @@ yum_xml_parse_primary (const char *filename,
                      user_data, err);
 
     xmlSubstituteEntitiesDefault (1);
-    rc = xmlSAXUserParseFile (&primary_sax_handler, &ctx, filename);
+    xmlSAXUserParseFile (&primary_sax_handler, &ctx, filename);
 
     if (sctx->current_package) {
         g_warning ("Incomplete package lost");
@@ -830,8 +829,6 @@ yum_xml_parse_filelists (const char *filename,
     FilelistSAXContext ctx;
     SAXContext *sctx = &ctx.sctx;
 
-    int rc;
-
     ctx.state = FILELIST_PARSER_TOPLEVEL;
     ctx.current_file = NULL;
     
@@ -839,7 +836,7 @@ yum_xml_parse_filelists (const char *filename,
                      user_data, err);
 
     xmlSubstituteEntitiesDefault (1);
-    rc = xmlSAXUserParseFile (&filelist_sax_handler, &ctx, filename);
+    xmlSAXUserParseFile (&filelist_sax_handler, &ctx, filename);
 
     if (sctx->current_package) {
         g_warning ("Incomplete package lost");
@@ -1053,8 +1050,6 @@ yum_xml_parse_other (const char *filename,
     OtherSAXContext ctx;
     SAXContext *sctx = &ctx.sctx;
 
-    int rc;
-
     ctx.state = OTHER_PARSER_TOPLEVEL;
     ctx.current_entry = NULL;
     
@@ -1062,7 +1057,7 @@ yum_xml_parse_other (const char *filename,
                      user_data, err);
 
     xmlSubstituteEntitiesDefault (1);
-    rc = xmlSAXUserParseFile (&other_sax_handler, &ctx, filename);
+    xmlSAXUserParseFile (&other_sax_handler, &ctx, filename);
 
     if (sctx->current_package) {
         g_warning ("Incomplete package lost");
